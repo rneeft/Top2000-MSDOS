@@ -13,6 +13,7 @@ COMMON SHARED totalEditions AS INTEGER
 DIM SHARED currentEdition AS INTEGER
 DIM SHARED currentPosition AS INTEGER
 DIM SHARED selectedTrackIndex AS INTEGER
+DIM SHARED firstResize AS INTEGER
 
 TYPE ListingType
     edition AS INTEGER
@@ -27,24 +28,9 @@ TYPE TrackType
     Year AS INTEGER
 END TYPE
 
-SUB GotoDelta (D AS INTEGER)
-    DIM current AS INTEGER
-    current = scrPositions.Value + D
-
-    IF current > 1991 THEN
-        current = 1991
-    END IF
-
-    IF current < 1 THEN
-        current = 1
-    END IF
-
-    scrPositions.Value = current
-
-END SUB
-
 SUB MovePositions (positions AS INTEGER)
-    MSGBOX STR$(positions)
+    currentPosition = currentPosition + positions
+    CALL SetNewPosition
 END SUB
 
 SUB OnEditionChanged ()
@@ -59,41 +45,37 @@ SUB OnEditionChanged ()
 END SUB
 
 SUB OnExit ()
-    frmAbout.HIDE
     frmEditions.HIDE
     frmDetails.HIDE
     frmJump2pos.HIDE
     frmMain.HIDE
     CLS
+    PRINT "Bedankt voor het gebruik van TOP 2000 voor MS-DOS"
+    PRINT "Bekijk de code op https://github.com/rneeft/Top2000-MSDOS"
+    PRINT ""
+    PRINT "Rick"
     END
 END SUB
 
 SUB OnFormLoad ()
-  'ON LOCAL ERROR GOTO DiskCheck
-
-  Left = 0
-
+  
+  firstResize = 1
   currentEdition = lastEdition
   currentPosition = 1
 
   frmMain.lblEdition.Caption = LTRIM$(STR$(lastEdition))
 
   CALL SetNewPosition
-  EXIT SUB
-
-DiskCheck:
-    M$ = "Unable to find the TOP 2000 database." + CHR$(13) + CHR$(10) + CHR$(13) + CHR$(10)
-    M$ = M$ + "Please make the the TOP2000.DAT file " + CHR$(13) + CHR$(10)
-    M$ = M$ + "is located next to the Top2000 executable" + CHR$(13) + CHR$(10)
-    M$ = M$ + CHR$(13) + CHR$(10)
-    M$ = M$ + "Error code: " + STR$(ERR)
-    MSGBOX M$, 0, "TOP 2000 database missing"
-    END
-
 
 END SUB
 
 SUB OnFormResize ()
+
+    IF firstResize = 1 THEN
+        firstResize = 0
+        EXIT SUB
+    END IF
+
     IF frmMain.WindowSTATE = 0 THEN Top = 0
     IF frmMain.Height <> 25 THEN frmMain.Height = 25
     IF frmMain.Width < 23 THEN frmMain.Width = 23
@@ -130,7 +112,6 @@ SUB OnTrackClick (Index AS INTEGER)
     CALL LoadTrackDetails
     frmDetails.SHOW 0
     frmDetails.SETFOCUS
-    
 
 END SUB
 
@@ -161,10 +142,6 @@ SUB PutTracksOnScreen ()
         frmMain.lblTitle(I).Width = maxSize
 
     NEXT I
-END SUB
-
-SUB SelectOtherEdition ()
-    frmEditions.SHOW 0
 END SUB
 
 SUB SetNewPosition ()
@@ -215,3 +192,6 @@ SUB SetNewPosition ()
 
 END SUB
 
+SUB SelectOtherEdition ()
+    frmEditions.SHOW 0
+END SUB

@@ -6,13 +6,12 @@ COMMON SHARED editionOnView AS INTEGER
 COMMON SHARED firstEdition AS INTEGER
 COMMON SHARED lastEdition AS INTEGER
 
-
 SUB OnEditionsChange ()
 
     DIM edition AS INTEGER
     edition = VAL(frmEditions.txtEdition.Text)
     IF edition < firstEdition OR edition > lastEdition THEN
-        MSGBOX "Editie is verkeerd. Kies een geldige editie"
+        MSGBOX "Kies een editie tussen " + LTRIM$(STR$(firstEdition)) + " en " + LTRIM$(STR$(lastEdition))
     ELSE
         frmMain.lblEdition.Caption = frmEditions.txtEdition.Text
 
