@@ -22,7 +22,7 @@ TYPE TrackType
     firstEdition AS INTEGER
     LastPosition AS INTEGER
     lastEdition AS INTEGER
-    LastPlayTime AS STRING * 16
+    LastPlayTime AS STRING * 26
     Appearances AS INTEGER
     AppearancesPositions AS INTEGER
 END TYPE

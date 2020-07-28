@@ -1,3 +1,4 @@
+'$FORM frmMain
 '$FORM frmJump2Pos
 
 SUB OnCancelClick ()
@@ -13,7 +14,7 @@ SUB OnOkClick ()
     ELSE
         IF position > 1991 THEN position = 1991
 
-        Main.scrPositions.Value = position
+        frmMain.scrPositions.Value = position
         frmJump2Pos.HIDE
     END IF
 

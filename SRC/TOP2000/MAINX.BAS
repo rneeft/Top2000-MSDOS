@@ -144,6 +144,10 @@ SUB PutTracksOnScreen ()
     NEXT I
 END SUB
 
+SUB SelectOtherEdition ()
+    frmEditions.SHOW 0
+END SUB
+
 SUB SetNewPosition ()
 
   OPEN "TOP2000.DAT" FOR ISAM ListingType "Listings" AS #1
@@ -192,6 +196,3 @@ SUB SetNewPosition ()
 
 END SUB
 
-SUB SelectOtherEdition ()
-    frmEditions.SHOW 0
-END SUB
