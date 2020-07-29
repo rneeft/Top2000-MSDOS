@@ -30,6 +30,9 @@ END TYPE
 
 SUB MovePositions (positions AS INTEGER)
     currentPosition = currentPosition + positions
+    IF currentPosition < 0 THEN currentPosition = 0
+    IF currentPosition > 1991 THEN currentPosition = 1991
+
     CALL SetNewPosition
 END SUB
 
@@ -77,8 +80,11 @@ SUB OnFormResize ()
     END IF
 
     IF frmMain.WindowSTATE = 0 THEN Top = 0
-    IF frmMain.Height <> 25 THEN frmMain.Height = 25
-    IF frmMain.Width < 23 THEN frmMain.Width = 23
+    IF frmMain.WindowSTATE = 0 THEN
+        IF frmMain.Height <> 25 THEN frmMain.Height = 25
+        IF frmMain.Width < 23 THEN frmMain.Width = 23
+    END IF
+    
 
     IF frmMain.Width > 10 THEN
 
@@ -150,6 +156,10 @@ END SUB
 
 SUB SetNewPosition ()
 
+  frmMain.lblPos(selectedTrackIndex).BackColor = 15
+  frmMain.lblTitle(selectedTrackIndex).BackColor = 15
+  frmMain.lblArtist(selectedTrackIndex).BackColor = 15
+ 
   OPEN "TOP2000.DAT" FOR ISAM ListingType "Listings" AS #1
   OPEN "TOP2000.DAT" FOR ISAM TrackType "Tracks" AS #2
 
@@ -164,7 +174,7 @@ SUB SetNewPosition ()
   DIM I AS INTEGER
   IF currentPosition < 1 THEN currentPosition = 1
   IF currentPosition + max > 2001 THEN currentPosition = 2001 - max
-
+  
   FOR I = 0 TO 9
     SEEKEQ #1, currentEdition, (currentPosition + I)
     RETRIEVE #1, listing

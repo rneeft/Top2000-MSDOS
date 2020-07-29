@@ -40,8 +40,8 @@ SUB AddEditionsToScreen ()
   SETINDEX #1, "ByTrack"
   DIM listing AS ListingType
   DIM I AS INTEGER
-    DIM tId AS INTEGER
-    tId = VAL(LTRIM$(frmDetails.lblTrackId.Caption))
+  DIM tId AS INTEGER
+  tId = VAL(LTRIM$(frmDetails.lblTrackId.Caption))
 
   FOR I = 0 TO 8
 
@@ -157,7 +157,7 @@ SUB LoadTrackDetails ()
     frmDetails.lblTrackYear.Left = LEN(RTRIM$(track.Artist)) + 3
 
     CLOSE #1
-
+    skipEdition = 0
     CALL AddEditionsToScreen
 
 END SUB
