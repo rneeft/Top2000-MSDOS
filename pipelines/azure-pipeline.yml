@@ -3,14 +3,17 @@ trigger:
 
 pr: none
 
-pool:
-  name: AtHome
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      name: At Home
+    steps:
+    - task: nsis@1
+      inputs:
+        scriptFile: 'pipelines\installer.nsi'
 
-steps:
-- task: nsis@1
-  inputs:
-    scriptFile: 'pipelines\installer.nsi'
-
-- publish: pipelines\Top2000Installer.exe
-  displayName: Publishing installer
-  artifact: installer
+    - publish: pipelines\Top2000Installer.exe
+      displayName: Publishing installer
+      artifact: installer
