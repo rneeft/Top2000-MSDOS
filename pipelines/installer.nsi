@@ -14,7 +14,7 @@
 InstallDir "$LOCALAPPDATA\${COMPANYNAME}\${APPNAME}"
 
 Name "TOP 2000 APP voor MS-DOS"
-Icon "top2000.ico"
+Icon "BIN\top2000.ico"
 OutFile "Top2000Installer.exe"
 RequestExecutionLevel user
 LicenseData "BIN\licentie.txt"
