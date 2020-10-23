@@ -1,5 +1,5 @@
 # Top2000 App voor MS-DOS
-![Hoofdscherm](src/web/img/main.jpg)
+![Hoofdscherm](SRC/WEB/IMG/main.jpg)
 
 De Top2000 app is er nu ook voor MS-DOS. Waarom? Omdat het kan en we zaten door het Coronavirus toch in lockdown. Alle edities tot en met 2019 zijn te bewonderen in deze mooie app.
 
