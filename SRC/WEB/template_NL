@@ -15,11 +15,11 @@
             h1 {
                 color: #AA0000;    
             }
-            p a {
+            .link {
                 color: white;
                 text-decoration: none;
             }
-            p a.active {
+            a.active {
                 color: white;
                 text-decoration: none;
                 font-weight: bold;
@@ -41,11 +41,11 @@
                             <IMG SRC="IMG/EN.png" />
                         </A>
                     </P>
-                    <P><A HREF="../NL/index.html">Start</A></P>
-                    <P><A HREF="../NL/overview.html">Overzicht</A></P>
-                    <P><A HREF="../NL/features.html">Functies</A></P>
-                    <P><A HREF="../NL/download.html">Download</A></P>
-                    <P><A HREF="../NL/about.html">Over</A></P>
+                    <P><A class="link" HREF="../NL/index.html">Start</A></P>
+                    <P><A class="link" HREF="../NL/overview.html">Overzicht</A></P>
+                    <P><A class="link" HREF="../NL/features.html">Functies</A></P>
+                    <P><A class="link" HREF="../NL/download.html">Download</A></P>
+                    <P><A class="link" HREF="../NL/about.html">Over</A></P>
                 </TD>
                 <TD VALIGN=TOP>
                     {{Content}}
@@ -60,7 +60,6 @@
                 if (urls[i].href == window.location.href){
                     urls[i].className += " active";
                 }
-                
             }
         </SCRIPT>
     </BODY>
