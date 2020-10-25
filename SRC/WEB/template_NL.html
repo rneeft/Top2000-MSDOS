@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <title>Top 2000 App voor MS-DOS</title>
+        <meta charset="UTF-8"/>
+        <meta name="description" content="Top 2000 app voor MS-DOS" />
+        <meta name="keywords" content="VBDOS, TOP2000" />
+        <link rel="stylesheet" href="../css/site.css" />
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td class="nav" >
+                    <img src="../img/logo.gif" alt="TOP2000 voor MS-DOS logo" /><br/>
+                    <p>
+                        <img src="../img/NL.png" alt="Nederlands" />
+                            
+                        <a href="EN/{{Name}}">
+                            <img src="../img/EN.png" alt="English" />
+                        </a>
+                    </p>
+                    <p><a class="link" href="../nl/index.html">Start</a></p>
+                    <p><a class="link" href="../nl/functies.html">Functies</a></p>
+                    <p><a class="link" href="../nl/download.html">Download</a></p>
+                    <p><a class="link" href="../nl/over.html">Over</a></p>
+                    <p>
+                        <a href="https://validator.w3.org/check?uri=referer"><img
+                            src="http://www.w3.org/Icons/valid-xhtml10"
+                            alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+                    </p>                   
+                </td>
+                <td>
+                    {{Content}}
+                </td>
+            </tr>
+        </table>
+
+        <script>
+            var urls = document.getElementsByTagName('a');
+
+            for (i = 0; i < urls.length; i++){
+                if (urls[i].href == window.location.href){
+                    urls[i].className += " active";
+                }
+            }
+        </script>
+    </body>
+</html>

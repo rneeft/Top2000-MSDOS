@@ -1,0 +1,40 @@
+body { 
+    background-image: url('../img/brg.jpg');
+    background-repeat: repeat-y;
+    font-family: Verdana, Arial, Helvetica;
+    width: 850px;
+
+}
+.link{
+    color:white
+}
+h1
+{
+    margin-top:0px;
+}
+h1, h2, h3, h4 {
+    color: #AA0000;    
+}
+.link {
+    color: white;
+    text-decoration: none;
+}
+a.active {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+.code {
+    font-family:'Courier New';
+    background:#F3F4F4; 
+    display: inline;
+}
+table tr {
+    vertical-align: top;
+}
+td {
+    vertical-align: top;
+}
+.nav {
+    width: 200px
+}
