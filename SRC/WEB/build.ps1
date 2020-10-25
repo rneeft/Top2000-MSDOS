@@ -1,4 +1,5 @@
-$template = Get-Content -Path 'template_NL.html' -Raw
+$templateNL = Get-Content -Path 'template_NL.html' -Raw
+$templateEN = Get-Content -Path 'template_EN.html' -Raw
 $nl_items = Get-ChildItem ('nl\*.html');
 $en_items = Get-ChildItem ('en\*.html');
 
@@ -15,7 +16,7 @@ Copy-Item "favicon.ico" -Destination "BIN\favicon.ico" -Force
 foreach ($item in $nl_items) {
     $path = "BIN\nl\"  + $item.Name;
     $content = Get-Content -Path $item -Raw
-    $newContent = $template -replace "{{Content}}" , $content
+    $newContent = $templateNL -replace "{{Content}}" , $content
     $newContent = $newContent -replace "{{Name}}", $item.Name
     New-Item -Path $path -Value $newContent -Force
 }
@@ -24,7 +25,7 @@ foreach ($item in $nl_items) {
 foreach ($item in $en_items) {
     $path = "BIN\en\"  + $item.Name;
     $content = Get-Content -Path $item -Raw
-    $newContent = $template -replace "{{Content}}" , $content
+    $newContent = $templateEN -replace "{{Content}}" , $content
     $newContent = $newContent -replace "{{Name}}", $item.Name
     New-Item -Path $path -Value $newContent -Force
 }
