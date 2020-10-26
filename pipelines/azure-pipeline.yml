@@ -1,8 +1,5 @@
 name: GitHub - $(product) site $(version) build $(counter) - 
 
-trigger: 
-- master
-
 pr: none
 
 variables:
