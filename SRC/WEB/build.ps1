@@ -4,17 +4,17 @@ $nl_items = Get-ChildItem ('nl\*.html');
 $en_items = Get-ChildItem ('en\*.html');
 
 # making sure folder exists
-mkdir -PATH "BIN\IMG"  -Force
-mkdir -PATH "BIN\css" -Force
+mkdir -PATH "bin\img"  -Force
+mkdir -PATH "bin\css" -Force
 
 # copying site items
-Copy-Item "IMG\*" -Destination "BIN\img" -Force
-Copy-Item "css\*" -Destination "BIN\css" -Force
-Copy-Item "favicon.ico" -Destination "BIN\favicon.ico" -Force
+Copy-Item "img\*" -Destination "bin\img" -Force
+Copy-Item "css\*" -Destination "bin\css" -Force
+Copy-Item "favicon.ico" -Destination "bin\favicon.ico" -Force
 
 # replace all items for Dutch.
 foreach ($item in $nl_items) {
-    $path = "BIN\nl\"  + $item.Name;
+    $path = "bin\nl\"  + $item.Name;
     $content = Get-Content -Path $item -Raw
     $newContent = $templateNL -replace "{{Content}}" , $content
     $newContent = $newContent -replace "{{Name}}", $item.Name
@@ -23,7 +23,7 @@ foreach ($item in $nl_items) {
 
 # replace all items for English.
 foreach ($item in $en_items) {
-    $path = "BIN\en\"  + $item.Name;
+    $path = "bin\en\"  + $item.Name;
     $content = Get-Content -Path $item -Raw
     $newContent = $templateEN -replace "{{Content}}" , $content
     $newContent = $newContent -replace "{{Name}}", $item.Name
@@ -34,4 +34,4 @@ foreach ($item in $en_items) {
 $content = Get-Content -Path "BIN\nl\index.html" -Raw
 # replace all ../ in the index.html
 $newContent = $content -replace "\.\.\/", ""
-New-item "BIN\index.html" -Value $newContent -Force
+New-item "bin\index.html" -Value $newContent -Force

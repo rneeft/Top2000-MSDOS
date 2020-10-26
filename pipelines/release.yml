@@ -1,0 +1,55 @@
+parameters:
+  fullVersion: ''
+  stage: ''
+  product: ''
+  saName: '' 
+  hostName: ''
+
+steps:
+  - download: current
+    displayName: Download Azure Files
+    artifact: Azure
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'Deploy ARM'
+    inputs:
+      deploymentScope: 'Resource Group'
+      azureResourceManagerConnection: 'AzureConnection'
+      subscriptionId: '0574a3b5-5e81-4710-94ee-80824c764a71'
+      action: 'Create Or Update Resource Group'
+      resourceGroupName: 'CHR-$(product)-RG-$(stage)-WE'
+      location: 'West Europe'
+      templateLocation: 'Linked artifact'
+      csmFile: '$(Pipeline.Workspace)/Azure/azuredeploy.json'
+      csmParametersFile: '$(Pipeline.Workspace)/Azure/azuredeploy.parameters.json'
+      overrideParameters: '-stage "$(stage)" -product "$(product)" -hostName "$(hostName)"'
+      deploymentMode: 'Increment'
+      deploymentName: '$(product)-AzureDeployment-$(fullVersion)-$(stage)'
+
+  - task: ARM Outputs@5
+    displayName: 'Parse ARM Output'
+    inputs:
+      ConnectedServiceNameARM: 'AzureConnection'
+      resourceGroupName: 'CHR-$(product)-RG-$(stage)-WE'
+      prefix: 'ARM_'
+
+  - task: AzureCLI@2
+    displayName: 'Enable static site'
+    inputs:
+      azureSubscription: 'AzureConnection'
+      scriptType: 'ps'
+      scriptLocation: 'inlineScript'
+      inlineScript: 'az storage blob service-properties update --account-name $(saName) --static-website --404-document "404.html" --index-document "index.html" --auth-mode login'
+
+  - download: current
+    displayName: Download Database Files
+    artifact: Site
+
+  - task: AzureFileCopy@2
+    displayName: 'Publish Site'
+    inputs:
+      SourcePath: '$(Pipeline.Workspace)/Site'
+      azureSubscription: 'AzureConnection'
+      Destination: 'AzureBlob'
+      storage: '$(saName)'
+      ContainerName: '$web'
