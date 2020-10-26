@@ -11,6 +11,7 @@ stages:
       name: At Home
     steps:
     - task: nsis@1
+      displayName: Creating Windows Installer
       inputs:
         scriptFile: 'pipelines\installer.nsi'
 
