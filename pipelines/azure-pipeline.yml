@@ -17,3 +17,12 @@ stages:
     - publish: pipelines\Top2000Installer.msi
       displayName: Publishing installer
       artifact: installer
+      
+    - task: PowerShell@2
+      inputs:
+        filePath: 'SRC\WEB\build.ps1'
+    
+    - publish: SRC/WEB/BIN
+      displayName: Publishing website
+      artifact: web
+     
