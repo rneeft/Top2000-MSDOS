@@ -5,6 +5,9 @@ body {
     width: 850px;
 
 }
+a img {
+    text-decoration: none;
+}
 .link{
     color:white
 }
