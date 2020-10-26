@@ -4,7 +4,7 @@ steps:
     inputs:
       scriptFile: 'pipelines\installer.nsi'
 
-  - publish: pipelines\Top2000Installer.msi
+  - publish: pipelines\Top2000Installer.exe
     displayName: Publishing installer
     artifact: installer
     
