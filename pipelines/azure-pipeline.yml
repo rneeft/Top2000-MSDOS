@@ -12,7 +12,7 @@ variables:
   version: $[format('{0}.{1}.{2}', variables['major'], variables['minor'], variables['patch'])]
   counter: $[counter(variables['version'], 0)]
   fullVersion: $[format('{0}{1}.{2}', variables['version'], variables['quality'], variables['counter'])]
-  product: 'TOP2000DOS'
+  product: 'T2D'
   saName: 'chr$(product)sa$(stage)we'
 
 trigger: 
