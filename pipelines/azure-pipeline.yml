@@ -14,6 +14,6 @@ stages:
       inputs:
         scriptFile: 'pipelines\installer.nsi'
 
-    - publish: pipelines\Top2000Installer.exe
+    - publish: pipelines\Top2000Installer.msi
       displayName: Publishing installer
       artifact: installer
