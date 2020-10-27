@@ -17,9 +17,7 @@ Name "TOP 2000 APP voor MS-DOS"
 Icon "BIN\top2000.ico"
 OutFile "Top2000Installer.exe"
 RequestExecutionLevel user
-LicenseData "BIN\licentie.txt"
 
-page license
 page directory
 Page instfiles
 
@@ -33,11 +31,9 @@ Section "install"
     file "BIN\SDL.dll"
     file "BIN\SDL_net.dll"
 
-    writeUninstaller "$INSTDIR\uninstall.exe"
-
 	# Start Menu
 	createDirectory "$SMPROGRAMS\TOP2000"
-	createShortCut "$SMPROGRAMS\TOP2000\TOP2000 App voor DOS.lnk" "$INSTDIR\DOSBox.exe" '-noconsole -userconf -c "MOUNT T $INSTDIR" -c T: -c TOP2000' "$INSTDIR\TOP2000.ICO"
+	createShortCut "$SMPROGRAMS\TOP2000\TOP2000 App voor DOS.lnk" "$INSTDIR\DOSBox.exe" '-noconsole -userconf -c "MOUNT T $INSTDIR" -c T: -c TOP2000' "$INSTDIR\TOP2000.ICO" -c exit
 
 SectionEnd
 
@@ -55,9 +51,6 @@ section "uninstall"
     delete  $INSTDIR\SDL.dll
     delete  $INSTDIR\SDL_net.dll
  
-	# Always delete uninstaller as the last action
-	delete $INSTDIR\uninstall.exe
-
     # Try to remove the install directory - this will only happen if it is empty
 	rmDir $INSTDIR
 SectionEnd
