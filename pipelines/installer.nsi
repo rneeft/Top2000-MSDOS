@@ -33,7 +33,7 @@ Section "install"
 
 	# Start Menu
 	createDirectory "$SMPROGRAMS\TOP2000"
-	createShortCut "$SMPROGRAMS\TOP2000\TOP2000 App voor DOS.lnk" "$INSTDIR\DOSBox.exe" '-noconsole -userconf -c "MOUNT T $INSTDIR" -c T: -c TOP2000' "$INSTDIR\TOP2000.ICO" -c exit
+	createShortCut "$SMPROGRAMS\TOP2000\TOP2000 App voor DOS.lnk" "$INSTDIR\DOSBox.exe" '-noconsole -userconf -c "MOUNT T $INSTDIR" -c T: -c TOP2000 -c EXIT' "$INSTDIR\TOP2000.ICO"
 
 SectionEnd
 
