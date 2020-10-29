@@ -30,8 +30,11 @@ stages:
          "S:" | Out-File -FilePath "dosbox.conf" -Append
          "cd TOOLS" | Out-File -FilePath "dosbox.conf" -Append
          "BUILD.BAT" | Out-File -FilePath "dosbox.conf" -Append
+         "EXIT" | Out-File -FilePath "dosbox.conf" -Append
 
          Write-Host $env:SOURCEFOLDER
+         
+         dosbox -conf $env:SOURCEFOLDER\dosbox.conf -noconsole
       env:
         SourceFolder: $(Build.SourcesDirectory)
         TempFolder: $(Agent.TempDirectory)
