@@ -34,7 +34,7 @@ stages:
 
          Write-Host $env:SOURCEFOLDER
          
-         dosbox -conf $env:SOURCEFOLDER\dosbox.conf -noconsole
+         "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe" -conf $env:SOURCEFOLDER\dosbox.conf -noconsole
       env:
         SourceFolder: $(Build.SourcesDirectory)
         TempFolder: $(Agent.TempDirectory)
