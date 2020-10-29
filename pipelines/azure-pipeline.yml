@@ -22,15 +22,9 @@ stages:
     
     - powershell: |
          Write-Host $env:SOURCEFOLDER
-         "[cpu]" | Out-File -FilePath "dosbox.conf"
-         "cycles=max" | Out-File -FilePath "dosbox.conf" -Append
-         "[autoexec]" | Out-File -FilePath "dosbox.conf" -Append
-         "MOUNT C C:\DOS" | Out-File -FilePath "dosbox.conf" -Append
-         "MOUNT S $env:SOURCEFOLDER\SRC" | Out-File -FilePath "dosbox.conf" -Append
-         "S:" | Out-File -FilePath "dosbox.conf" -Append
-         "cd TOOLS" | Out-File -FilePath "dosbox.conf" -Append
-         "BUILD.BAT" | Out-File -FilePath "dosbox.conf" -Append
-         "EXIT" | Out-File -FilePath "dosbox.conf" -Append
+         $conf = Get-Content -Path 'pipelines\dosbox.conf' -Raw
+         $newContent = $conf -replace "{{Source_Folder}}" , $env:SOURCEFOLDER
+         New-Item "pipelines\dosbox.conf" -Value $newContent -Force
       env:
         SourceFolder: $(Build.SourcesDirectory)
         TempFolder: $(Agent.TempDirectory)
