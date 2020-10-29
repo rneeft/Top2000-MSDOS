@@ -4,3 +4,4 @@
 *.obj
 *.bak
 SRC/BIN/*
+SRC/BIN
