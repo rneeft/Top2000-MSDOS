@@ -31,4 +31,4 @@ stages:
 
     - task: BatchScript@1
       inputs:
-        filename: 'runit.bat'
+        filename: 'pipelines/runit.bat'
