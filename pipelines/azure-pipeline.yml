@@ -11,9 +11,18 @@ stages:
       name: At Home
     steps:
     - task: nsis@1
+      enabled: false
       inputs:
         scriptFile: 'pipelines\installer.nsi'
 
     - publish: pipelines\Top2000Installer.exe
+      enabled: false
       displayName: Publishing installer
       artifact: installer
+    
+    - powershell: |
+         Write-Host $env:SOURCEFOLDER
+      env:
+        SourceFolder: $(Build.SourcesDirectory)
+    
+    
