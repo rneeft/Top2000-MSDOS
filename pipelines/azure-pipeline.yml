@@ -28,6 +28,7 @@ stages:
 
         SET SDL_VIDEODRIVER=dummy
         & "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe" -conf $env:SOURCEFOLDER\pipelines\dosbox.conf -noconsole
+        Start-Sleep 10
       env:
         SourceFolder: $(Build.SourcesDirectory)
         TempFolder: $(Agent.TempDirectory)
