@@ -32,4 +32,4 @@ stages:
     - task: BatchScript@1
       inputs:
         filename: 'runit.bat'
-        workingFolder: '$(Build.SourcesDirectory)\pipelines'
+        workingFolder: '$(Build.SourcesDirectory)/pipelines'
