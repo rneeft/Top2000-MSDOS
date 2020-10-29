@@ -27,8 +27,8 @@ stages:
         New-Item "pipelines\dosbox.conf" -Value $newContent -Force
 
         SET SDL_VIDEODRIVER=dummy
-        & "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe" -conf $env:SOURCEFOLDER\pipelines\dosbox.conf -noconsole
-        Start-Sleep 10
+        & "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe" -conf $env:SOURCEFOLDER\pipelines\dosbox.conf -noconsole | Out-Null
       env:
         SourceFolder: $(Build.SourcesDirectory)
         TempFolder: $(Agent.TempDirectory)
+      timeoutInMinutes: 2
