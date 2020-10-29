@@ -21,6 +21,7 @@ stages:
       artifact: installer
     
     - powershell: |
+         Write-Host $env:SOURCEFOLDER
          SET SDL_VIDEODRIVER=dummy
          "[cpu]" | Out-File -FilePath "dosbox.conf"
          "cycles=max" | Out-File -FilePath "dosbox.conf" -Append
@@ -31,10 +32,7 @@ stages:
          "cd TOOLS" | Out-File -FilePath "dosbox.conf" -Append
          "BUILD.BAT" | Out-File -FilePath "dosbox.conf" -Append
          "EXIT" | Out-File -FilePath "dosbox.conf" -Append
-
-         Write-Host $env:SOURCEFOLDER
-         
-         "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe" -conf $env:SOURCEFOLDER\dosbox.conf -noconsole
+         "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe" -conf dosbox.conf -noconsole
       env:
         SourceFolder: $(Build.SourcesDirectory)
         TempFolder: $(Agent.TempDirectory)
