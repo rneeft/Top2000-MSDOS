@@ -3,5 +3,6 @@
 
 *.obj
 *.bak
+SRC/BIN
 SRC/BIN/*
 /SRC/WEB/BIN/
