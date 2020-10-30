@@ -28,9 +28,7 @@ stages:
 
         Set-Variable SDL_VIDEODRIVER=dummy
         $dos = Start-Process -FilePath "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe"  -ArgumentList "-conf $env:SOURCEFOLDER\pipelines\dosbox.conf -noconsole" -PassThru
-
         Wait-Process $dos.Id
       env:
         SourceFolder: $(Build.SourcesDirectory)
         TempFolder: $(Agent.TempDirectory)
-      timeoutInMinutes: 1
