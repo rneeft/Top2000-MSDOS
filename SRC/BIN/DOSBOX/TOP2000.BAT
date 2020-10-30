@@ -1,0 +1,1 @@
+dosbox TOP2000.EXE -conf top2000.conf -noconsole -exit

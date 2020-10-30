@@ -1,0 +1,14 @@
+   --------------------------------------------------------   
+           TOP 2000 VOOR MS-DOS Lees mij voor Dosbox
+                         November 2020
+   --------------------------------------------------------
+                 (c) Copyright Rick Neeft 2020
+
+Dit document helpt u de applicatie te gebruiken in combinatie met
+de meegeleverde DOSBox applicatie. 
+
+-----------
+TOP2000.BAT
+-----------
+
+Dubbel klik op TOP2000.BAT om de Top2000 te starten

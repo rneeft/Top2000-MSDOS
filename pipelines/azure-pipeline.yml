@@ -7,13 +7,39 @@ stages:
 - stage: Build
   jobs:
   - job: Build
+    workspace:
+      clean: all
     pool:
       name: At Home
     steps:
-    - task: nsis@1
+    - powershell: Start-Process -FilePath "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe"  -ArgumentList "$env:SOURCEFOLDER\BUILD.BAT -noconsole -exit" -Wait
+      env:
+        SourceFolder: $(Build.SourcesDirectory)
+    
+    - task: ArchiveFiles@2
       inputs:
-        scriptFile: 'pipelines\installer.nsi'
+        rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\DOSBOX'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/releases/top2000-dosbox.zip'
+        replaceExistingArchive: true
 
-    - publish: pipelines\Top2000Installer.exe
-      displayName: Publishing installer
-      artifact: installer
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\ZIP'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/releases/top2000.zip'
+        replaceExistingArchive: true
+
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\DISK'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/releases/top2000-disk.zip'
+        replaceExistingArchive: true
+
+    - publish: $(Build.ArtifactStagingDirectory)/releases
+      displayName: Publishing Releases
+      artifact: Releases
