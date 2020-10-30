@@ -37,6 +37,7 @@ stages:
     - template: dos-build.yml
 
 - stage: Test
+  displayName: 'Release - TST'
   jobs:
   - deployment: ReleaseTST
     displayName: 'Release TST'
