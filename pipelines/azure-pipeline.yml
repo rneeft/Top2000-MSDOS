@@ -12,29 +12,34 @@ stages:
     pool:
       name: At Home
     steps:
-    - task: nsis@1
-      enabled: false
-      inputs:
-        scriptFile: 'pipelines\installer.nsi'
-
-    - publish: pipelines\Top2000Installer.exe
-      enabled: false
-      displayName: Publishing installer
-      artifact: installer
-
-    - powershell: |
-        Write-Host $env:SOURCEFOLDER
-        $conf = Get-Content -Path 'pipelines\dosbox.conf' -Raw
-        $newContent = $conf -replace "{{Source_Folder}}" , $env:SOURCEFOLDER
-        New-Item "pipelines\dosbox.conf" -Value $newContent -Force
-        #Set-Variable SDL_VIDEODRIVER=dummy
-        Start-Process -FilePath "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe"  -ArgumentList "-conf $env:SOURCEFOLDER\pipelines\dosbox.conf" -PassThru -Wait
+    - powershell: Start-Process -FilePath "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe"  -ArgumentList "$env:SOURCEFOLDER\BUILD.BAT -noconsole -exit" -Wait
       env:
         SourceFolder: $(Build.SourcesDirectory)
-        TempFolder: $(Agent.TempDirectory)
     
-    - task: CmdLine@2
-      enabled: false
+    - task: ArchiveFiles@2
       inputs:
-        script: |
-          "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe" -conf $(Build.SourcesDirectory)\pipelines\dosbox.conf
+        rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\DOSBOX'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/releases/top2000-dosbox.zip'
+        replaceExistingArchive: true
+
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\ZIP'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/releases/top2000.zip'
+        replaceExistingArchive: true
+
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\DISK'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/releases/top2000-disk.zip'
+        replaceExistingArchive: true
+
+    - publish: $(Build.ArtifactStagingDirectory)/releases
+      displayName: Publishing Releases
+      artifact: Releases
