@@ -45,6 +45,12 @@ steps:
     displayName: Download Database Files
     artifact: Site
 
+- task: DownloadPipelineArtifact@2
+  inputs:
+    buildType: 'current'
+    artifactName: 'Release'
+    targetPath: '$(Pipeline.Workspace)\Site\release'
+ 
   - task: AzureFileCopy@2
     displayName: 'Publish Site'
     inputs:
