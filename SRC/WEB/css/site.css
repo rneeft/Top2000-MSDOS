@@ -1,9 +1,12 @@
+html, body, table {
+    height: 100%
+}
 body { 
-    background-image: url('../img/brg.jpg');
     background-repeat: repeat-y;
     font-family: Verdana, Arial, Helvetica;
-    width: 850px;
-
+    max-width: 850px;
+    min-height: 100%;
+    margin: -2px;
 }
 a img {
     text-decoration: none;
@@ -27,17 +30,36 @@ a.active {
     text-decoration: none;
     font-weight: bold;
 }
+a:visited { 
+    text-decoration: none !important;
+}
 .code {
     font-family:'Courier New';
     background:#F3F4F4; 
-    display: inline;
 }
-table tr {
+table {
+    margin: 0px;
+    min-height: 100%;
+}
+tr {
     vertical-align: top;
 }
 td {
     vertical-align: top;
 }
 .nav {
-    width: 200px
+    padding-left:12px;
+    padding-right: 10px;
+    width: 178px;
+    background: #AA0000;
+}
+.content{
+    padding-left: 20px;
+}
+.country-flag-link {
+    text-decoration: none;
+    text-decoration-color: #AA0000;
+    text-decoration-line: none; 
+    width: 16px;
+
 }
