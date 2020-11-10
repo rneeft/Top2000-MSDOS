@@ -1,4 +1,4 @@
-html, body, table {
+html, body, table .full-height {
     height: 100%
 }
 body { 
