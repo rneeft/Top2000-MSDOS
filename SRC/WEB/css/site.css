@@ -61,5 +61,13 @@ td {
     text-decoration-color: #AA0000;
     text-decoration-line: none; 
     width: 16px;
-
+}
+.not-found {
+    font-size: 18px;
+    font-family: 'monospace' , Courier, monospace;
+    background-color: black;
+    color: white;
+}
+.not-found h1 { 
+    color: white;
 }

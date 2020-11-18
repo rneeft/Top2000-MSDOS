@@ -35,3 +35,9 @@ $content = Get-Content -Path "BIN\nl\index.html" -Raw
 # replace all ../ in the index.html
 $newContent = $content -replace "\.\.\/", ""
 New-item "bin\index.html" -Value $newContent -Force
+
+# create 404 html (Dutch)
+$content = Get-Content -Path "BIN\nl\404.html" -Raw
+# replace all ../ in the index.html
+$newContent = $content -replace "\.\.\/", ""
+New-item "bin\404.html" -Value $newContent -Force
