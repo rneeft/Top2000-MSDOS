@@ -1,0 +1,3 @@
+# .BAS file in this repository aren't VBA but VBDOS files
+*.bas linguist-language=VBDOS
+*.mak linguist-language=Text

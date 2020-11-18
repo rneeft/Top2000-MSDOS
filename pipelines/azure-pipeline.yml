@@ -4,8 +4,8 @@ pr: none
 
 variables:
   major: 1
-  minor: 1
-  patch: 0
+  minor: 0
+  patch: 1
   version: $[format('{0}.{1}.{2}', variables['major'], variables['minor'], variables['patch'])]
   counter: $[counter(variables['version'], 0)]
   fullVersion: $[format('{0}{1}.{2}', variables['version'], variables['quality'], variables['counter'])]
