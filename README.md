@@ -1,5 +1,6 @@
 # Top2000 App voor MS-DOS
 ![Hoofdscherm](SRC/WEB/IMG/main.jpg)
+[![Build Status](https://dev.azure.com/Chroomsoft/Projects/_apis/build/status/TOP%202000%20DOS/TOP2000%20for%20DOS%20pipeline?branchName=master)](https://dev.azure.com/Chroomsoft/Projects/_build/latest?definitionId=55&branchName=master)
 
 De Top2000 app is er nu ook voor MS-DOS. Waarom? Omdat het kan en we zaten door het Coronavirus toch in lockdown. Alle edities tot en met 2019 zijn te bewonderen in deze mooie app.
 
