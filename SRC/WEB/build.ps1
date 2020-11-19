@@ -11,6 +11,7 @@ mkdir -PATH "bin\css" -Force
 Copy-Item "img\*" -Destination "bin\img" -Force
 Copy-Item "css\*" -Destination "bin\css" -Force
 Copy-Item "favicon.ico" -Destination "bin\favicon.ico" -Force
+Copy-Item "404.html" -Destination "bin\404.html" -Force
 
 # replace all items for Dutch.
 foreach ($item in $nl_items) {
@@ -35,9 +36,3 @@ $content = Get-Content -Path "BIN\nl\index.html" -Raw
 # replace all ../ in the index.html
 $newContent = $content -replace "\.\.\/", ""
 New-item "bin\index.html" -Value $newContent -Force
-
-# create 404 html (Dutch)
-$content = Get-Content -Path "BIN\nl\404.html" -Raw
-# replace all ../ in the index.html
-$newContent = $content -replace "\.\.\/", ""
-New-item "bin\404.html" -Value $newContent -Force

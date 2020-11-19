@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <title>Top 2000 App voor MS-DOS</title>
+        <meta charset="UTF-8"/>
+        <meta name="description" content="Top 2000 app voor MS-DOS" />
+        <meta name="keywords" content="VBDOS, TOP2000, MS-DOS, DOS" />
+        <style>
+            body{
+                background-color: black;
+                margin-top: 50px;
+                margin-left: 50px;
+            }
+            a {
+                color: white;
+            }
+            .not-found {
+                font-size: 18px;
+                font-family: 'monospace' , Courier, monospace;
+                background-color: black;
+                color: white;
+            }
+            .not-found h1 { 
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="not-found">
+        <h1>404 - Pagina niet gevonden</h1>
+
+        <p>
+            Starting MS-DOS...
+        </p>
+        <p>
+            C:\><span id="page-here"></span> <br/>
+            404 - Bad command or file name
+        </p>
+        <p>
+            C:\> klik <a href="https://dos.top2000.app/" > https://dos.top2000.app/ </a>
+        </p>
+    </div>
+    <script>
+        document.getElementById('page-here').textContent = window.location.href
+    </script>
+    </body>
+</html>
+
