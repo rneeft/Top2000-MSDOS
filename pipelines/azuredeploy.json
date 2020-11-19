@@ -1,0 +1,208 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "stage": {
+      "type": "string",
+      "allowedValues": [
+        "POC",
+        "DEV",
+        "TST",
+        "PRD"
+      ],
+      "metadata": {
+        "description": "Stage of the deployment, like DEV TST or PRD"
+      }
+    },
+    "product": {
+      "type": "string"
+    },
+    "hostName": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "locationSmall": {
+      "type": "string",
+      "defaultValue": "WE",
+      "metadata": {
+        "description": "Smaller representation of the location for example: WE for WestEurope"
+      }
+    },
+    "regionCode": {
+      "type": "string",
+      "defaultValue": "z6"
+    },
+    "azureCdnSKU": {
+      "type": "string",
+      "allowedValues": [
+        "Standard_Verizon",
+        "Premium_Verizon",
+        "Custom_Verizon",
+        "Standard_Akamai",
+        "Standard_Microsoft"
+      ],
+      "defaultValue": "Standard_Microsoft"
+    }
+  },
+  "variables": {
+    "applicationInsightsName": "[concat('CHR-', parameters('product'),'-AI-', parameters('stage'), '-', parameters('locationSmall'))]",
+    "storageAccountName": "[concat('chr', toLower(parameters('product')) ,'sa', toLower(parameters('stage')), toLower(parameters('locationSmall')))]",
+    "azureCdnName": "[concat('CHR-', parameters('product'),'-CDN-', parameters('stage'), '-GLOBAL')]",
+    "cdnEndpointName": "[concat('CHR-', parameters('product'),'-CEN-', parameters('stage'), '-GLOBAL')]"
+  },
+  "resources": [
+    {
+      "tags": {
+        "displayName": "Application Insights",
+        "product": "[parameters('product')]",
+        "stage": "[parameters('stage')]"
+      },
+      "name": "[variables('applicationInsightsName')]",
+      "type": "microsoft.insights/components",
+      "apiVersion": "2015-05-01",
+      "location": "[parameters('location')]",
+      "properties": {
+        "Request_Source": "IbizaWebAppExtensionCreate"
+      }
+    },
+
+    {
+      "tags": {
+        "displayName": "Storage Account",
+        "product": "[parameters('product')]",
+        "stage": "[parameters('stage')]"
+      },
+      "name": "[variables('storageAccountName')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-06-01",
+      "location": "[parameters('location')]",
+      "kind": "StorageV2",
+      "properties": {
+        "accessTier": "Hot",
+        "supportsHttpsTrafficOnly": true
+      },
+      "sku": {
+        "name": "Standard_RAGRS"
+      },
+      "resources": [],
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', variables('applicationInsightsName'))]"
+      ]
+    },
+
+    {
+      "tags": {
+        "displayName": "Azure CDN",
+        "product": "[parameters('product')]",
+        "stage": "[parameters('stage')]"
+      },
+      "type": "microsoft.cdn/profiles",
+      "apiVersion": "2019-04-15",
+      "name": "[variables('azureCdnName')]",
+      "location": "Global",
+      "sku": {
+        "name": "[parameters('azureCdnSKU')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+      ]
+    },
+    {
+      "tags": {
+        "displayName": "Azure CDN Endpoint",
+        "product": "[parameters('product')]",
+        "stage": "[parameters('stage')]"
+      },
+      "type": "microsoft.cdn/profiles/endpoints",
+      "apiVersion": "2019-12-31",
+      "dependsOn": [
+        "[concat('Microsoft.Cdn/profiles/', variables('azureCdnName'))]"
+      ],
+      "name": "[concat(variables('azureCdnName'),'/',variables('cdnEndpointName'))]",
+      "location": "Global",
+      "properties": {
+        "originHostHeader": "[concat(variables('storageAccountName'),'.',parameters('regionCode'),'.web.core.windows.net')]",
+        "isHttpAllowed": false,
+        "isHttpsAllowed": true,
+        "queryStringCachingBehavior": "IgnoreQueryString",
+        "origins": [
+          {
+            "name": "[concat(variables('storageAccountName'),'-',parameters('regionCode'),'-web-core-windows-net')]",
+            "properties": {
+              "hostName": "[concat(variables('storageAccountName'),'.',parameters('regionCode'),'.web.core.windows.net')]",
+              "originHostHeader": "[concat(variables('storageAccountName'),'.',parameters('regionCode'),'.web.core.windows.net')]",
+              "httpsPort": 443,
+              "priority": 1,
+              "weight": 1000,
+              "enabled": true
+            }
+          }
+        ],
+        "isCompressionEnabled": true,
+        "contentTypesToCompress": [
+          "application/json",
+          "application/eot",
+          "application/font",
+          "application/font-sfnt",
+          "application/javascript",
+          "application/opentype",
+          "application/otf",
+          "application/pkcs7-mime",
+          "application/truetype",
+          "application/ttf",
+          "application/vnd.ms-fontobject",
+          "application/xhtml+xml",
+          "application/xml",
+          "application/xml+rss",
+          "application/x-font-opentype",
+          "application/x-font-truetype",
+          "application/x-font-ttf",
+          "application/x-httpd-cgi",
+          "application/x-javascript",
+          "application/x-mpegurl",
+          "application/x-opentype",
+          "application/x-otf",
+          "application/x-perl",
+          "application/x-ttf",
+          "font/eot",
+          "font/ttf",
+          "font/otf",
+          "font/opentype",
+          "image/svg+xml",
+          "text/css",
+          "text/csv",
+          "text/html",
+          "text/javascript",
+          "text/js",
+          "text/plain",
+          "text/richtext",
+          "text/tab-separated-values",
+          "text/xml",
+          "text/x-script",
+          "text/x-component",
+          "text/x-java-source"
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Cdn/profiles/endpoints/customdomains",
+      "apiVersion": "2019-12-31",
+      "name": "[concat(variables('azureCdnName'), '/', variables('cdnEndpointName'), '/', replace(parameters('hostName'), '.', '-'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Cdn/profiles/endpoints', variables('azureCdnName'), variables('cdnEndpointName'))]"
+      ],
+      "properties": {
+        "hostName": "[parameters('hostName')]"
+      }
+    }
+  ],
+  "outputs": {
+    "applicationInsightsInstrumentationKey": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsightsName')), '2015-05-01').InstrumentationKey]"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+html, body, table .full-height {
+    height: 100%
+}
+body { 
+    background-repeat: repeat-y;
+    font-family: Verdana, Arial, Helvetica;
+    max-width: 850px;
+    min-height: 100%;
+    margin: -2px;
+}
+a img {
+    text-decoration: none;
+}
+.link{
+    color:white
+}
+h1
+{
+    margin-top:0px;
+}
+h1, h2, h3, h4 {
+    color: #AA0000;    
+}
+.link {
+    color: white;
+    text-decoration: none;
+}
+a.active {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:visited { 
+    text-decoration: none !important;
+}
+.code {
+    font-family:'Courier New';
+    background:#F3F4F4; 
+}
+table {
+    margin: 0px;
+    min-height: 100%;
+}
+tr {
+    vertical-align: top;
+}
+td {
+    vertical-align: top;
+}
+.nav {
+    padding-left:12px;
+    padding-right: 10px;
+    width: 178px;
+    background: #AA0000;
+}
+.content{
+    padding-left: 20px;
+}
+.country-flag-link {
+    text-decoration: none;
+    text-decoration-color: #AA0000;
+    text-decoration-line: none; 
+    width: 16px;
+}
+.not-found {
+    font-size: 18px;
+    font-family: 'monospace' , Courier, monospace;
+    background-color: black;
+    color: white;
+}
+.not-found h1 { 
+    color: white;
+}

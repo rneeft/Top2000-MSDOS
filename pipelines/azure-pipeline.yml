@@ -1,45 +1,54 @@
-trigger: 
-- master
+name: GitHub - $(product) site $(version) build $(counter) - 
 
 pr: none
+
+variables:
+  major: 1
+  minor: 0
+  patch: 1
+  version: $[format('{0}.{1}.{2}', variables['major'], variables['minor'], variables['patch'])]
+  counter: $[counter(variables['version'], 0)]
+  fullVersion: $[format('{0}{1}.{2}', variables['version'], variables['quality'], variables['counter'])]
+  product: 'T2D'
+  saName: 'chr$(product)sa$(stage)we'
+
+trigger: 
+  branches:
+   include:
+     - master
+
+pool:
+  name: At Home
 
 stages:
 - stage: Build
   jobs:
-  - job: Build
-    workspace:
-      clean: all
+  - job: WebBuild
+    displayName: 'Web build'
     pool:
       name: At Home
     steps:
-    - powershell: Start-Process -FilePath "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe"  -ArgumentList "$env:SOURCEFOLDER\BUILD.BAT -noconsole -exit" -Wait
-      env:
-        SourceFolder: $(Build.SourcesDirectory)
-    
-    - task: ArchiveFiles@2
-      inputs:
-        rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\DOSBOX'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/releases/top2000-dosbox.zip'
-        replaceExistingArchive: true
+    - template: web-build.yml
+  - job: 
+    displayName: 'VBDOS Build'
+    pool:
+      name: At Home
+    steps:
+    - template: dos-build.yml
 
-    - task: ArchiveFiles@2
-      inputs:
-        rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\ZIP'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/releases/top2000.zip'
-        replaceExistingArchive: true
-
-    - task: ArchiveFiles@2
-      inputs:
-        rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\DISK'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/releases/top2000-disk.zip'
-        replaceExistingArchive: true
-
-    - publish: $(Build.ArtifactStagingDirectory)/releases
-      displayName: Publishing Releases
-      artifact: Releases
+- stage: Test
+  displayName: 'Release - TST'
+  jobs:
+  - deployment: ReleaseTST
+    displayName: 'Release TST'
+    variables:
+      stage: 'TST'
+      hostName: 'dos-tst.Top2000.app'
+    pool:
+      name: At Home
+    environment: 'TST'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: release.yml

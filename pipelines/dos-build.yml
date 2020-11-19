@@ -1,0 +1,32 @@
+steps:    
+  - powershell: Start-Process -FilePath "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe"  -ArgumentList "$env:SOURCEFOLDER\BUILD.BAT -noconsole -exit" -Wait
+    env:
+      SourceFolder: $(Build.SourcesDirectory)
+      
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\DOSBOX'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/release/top2000-dosbox.zip'
+      replaceExistingArchive: true
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\ZIP'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/release/top2000.zip'
+      replaceExistingArchive: true
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)\SRC\BIN\DISK'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/release/top2000-disk.zip'
+      replaceExistingArchive: true
+
+  - publish: $(Build.ArtifactStagingDirectory)/release
+    displayName: Publishing Releases
+    artifact: Release
