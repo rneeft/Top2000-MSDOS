@@ -52,3 +52,20 @@ stages:
         deploy:
           steps:
           - template: release.yml
+
+- stage: Production
+  displayName: 'Release - PRD'
+  jobs:
+  - deployment: ReleasePRD
+    displayName: 'Release PRD'
+    variables:
+      stage: 'PRD'
+      hostName: 'dos.Top2000.app'
+    pool:
+      name: At Home
+    environment: 'PRD'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: release.yml
