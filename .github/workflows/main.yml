@@ -12,6 +12,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
     
-      - run: docker pull rneeft/vbdoscompiler:latest
+      - name: Running docker commands 
+        run: |
+          docker pull rneeft/vbdoscompiler:latest
+          docker create --name top2000dos rneeft/vbdoscompiler
+          
+          docker cp src/ top2000dos:/dos/drive_c/SRC
+          docker cp build.bat top2000dos:/dos/drive_c/build.bat
+          
+          docker start top2000dos -a
+          docker cp top2000dos:/dos/drive_c/SRC/BIN/TOP2000.EXE TOP2000.EXE
+          docker cp top2000dos:/dos/drive_c/SRC/BIN/TOP2000.DAT TOP2000.DAT
+          docker cp top2000dos:/dos/drive_c/SRC/OBJ/OUTPUT.TXT OUTPUT.TXT
     
-    
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: TOP2000App
+          path: |
+            TOP2000.EXE
+            TOP2000.DAT
