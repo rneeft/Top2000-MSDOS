@@ -14,13 +14,21 @@ jobs:
     
       - name: Running docker commands 
         run: |
+          echo pull vbdoscompiler
           docker pull rneeft/vbdoscompiler:latest
+          echo create but not start image
           docker create --name top2000dos rneeft/vbdoscompiler
           
+          echo Cp SRC/TOP2000/ to container
           docker cp SRC/TOP2000/ top2000dos:/dos/drive_c/SRC
+          echo cp BUILD.BAT to container
+          cat BUILD.BAT
           docker cp BUILD.BAT top2000dos:/dos/drive_c/BUILD.BAT
           
+          echo start container
           docker start top2000dos -a
+          
+          echo copy artifacts
           docker cp top2000dos:/dos/drive_c/SRC/BIN/TOP2000.EXE TOP2000.EXE
           docker cp top2000dos:/dos/drive_c/SRC/BIN/TOP2000.DAT TOP2000.DAT
           docker cp top2000dos:/dos/drive_c/SRC/OBJ/OUTPUT.TXT OUTPUT.TXT
