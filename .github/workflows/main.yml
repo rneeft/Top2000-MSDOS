@@ -1,44 +1,28 @@
-name: DOS Build
-
-on:
-  push:
-    branches: [ main ]
-
+name: Build TOP2000 for MS-DOS
+on: push
 jobs:
-  compiled_code:
-    name: Push vbdoscompiler image
-    runs-on: ubuntu-latest
+  build:
+    runs-on: windows-latest
     steps:
-      - name: Checkout code
+      - name: Check out repository code
         uses: actions/checkout@v3
-    
-      - name: Running docker commands 
+
+      - name: Install dosbox
         run: |
-          echo pull vbdoscompiler
-          docker pull rneeft/vbdoscompiler:latest
-          echo create but not start image
-          docker create --name top2000dos rneeft/vbdoscompiler
+          choco install dosbox
           
-          echo Cp SRC/TOP2000/ to container
-          docker cp SRC/TOP2000/ top2000dos:/dos/drive_c/SRC
-          echo cp BUILD.BAT to container
-          cat BUILD.BAT
-          docker cp BUILD.BAT top2000dos:/dos/drive_c/BUILD.BAT
-          
-          echo start container
-          docker start top2000dos -a
-          
-          echo copy artifacts
-          docker cp top2000dos:/dos/drive_c/SRC/BIN/TOP2000.EXE TOP2000.EXE
-          docker cp top2000dos:/dos/drive_c/SRC/BIN/TOP2000.DAT TOP2000.DAT
-          docker cp top2000dos:/dos/drive_c/SRC/OBJ/OUTPUT.TXT OUTPUT.TXT
-          
-          cat OUTPUT.TXT
-    
+      - name: Compile
+        run: |
+          cd "C:\Program Files (x86)\DOSBox-0.74-3"
+          $Env:SDL_VIDEODRIVER = 'dummy'
+          .\DOSBox.exe -c "mount C D:\a\top2000-msdos\top2000-msdos" -c "C:\SRC\TOP2000\build.bat" -noconsole -noautoexec | Out-Null
+          type D:\a\top2000-msdos\top2000-msdos\SRC\TOP2000\OBJ\OUTPUT.TXT
+      
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: TOP2000App
+          name: TOP2000 App
           path: |
-            TOP2000.EXE
-            TOP2000.DAT
+            D:\a\top2000-msdos\top2000-msdos\SRC\TOP2000\BIN\TOP2000.EXE
+            D:\a\top2000-msdos\top2000-msdos\SRC\TOP2000\BIN\TOP2000.DAT
+      

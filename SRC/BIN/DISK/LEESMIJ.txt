@@ -77,7 +77,7 @@ EXPAND.EXE TOP2000.EX_ D:\TOP2000\TOP2000.EXE
 CONTACT
 -------
 U kunt op de volgende manier contact opnemen met de developer:
-Via email: rick@chroomsoft.nl
+Via email: rick.neeft@outlook.com
 Via GitHub: https://github.com/rneeft/Top2000-MSDOS
 Op GitHub vindt u tevens ook de volledige broncode van de
 applicatie.
