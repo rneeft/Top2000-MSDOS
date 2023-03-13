@@ -15,7 +15,7 @@ jobs:
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
-          .\DOSBox.exe -c "mount C D:\a\Top2000-MSDOS\Top2000-MSDOS" -c "C:\SRC\TOP2000\build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
+          .\DOSBox.exe -c "mount C D:\a\Top2000-MSDOS\Top2000-MSDOS" -c "C:" -c "cd SRC\TOP2000" -c "build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
           cd D:\a\Top2000-MSDOS\Top2000-MSDOS
           ls -R
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\TOP2000\OBJ\OUTPUT.TXT
