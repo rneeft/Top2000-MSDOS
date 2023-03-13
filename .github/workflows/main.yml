@@ -15,14 +15,16 @@ jobs:
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
-          .\DOSBox.exe -c "mount C D:\a\top2000-msdos\top2000-msdos" -c "C:\SRC\TOP2000\build.bat" -noconsole -noautoexec | Out-Null
-          type D:\a\top2000-msdos\top2000-msdos\SRC\TOP2000\OBJ\OUTPUT.TXT
+          .\DOSBox.exe -c "mount C D:\a\Top2000-MSDOS\Top2000-MSDOS" -c "C:\SRC\TOP2000\build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
+          cd D:\a\Top2000-MSDOS\Top2000-MSDOS
+          ls -R
+          type D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\TOP2000\OBJ\OUTPUT.TXT
       
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: TOP2000 App
           path: |
-            D:\a\top2000-msdos\top2000-msdos\SRC\TOP2000\BIN\TOP2000.EXE
-            D:\a\top2000-msdos\top2000-msdos\SRC\TOP2000\BIN\TOP2000.DAT
+            D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\TOP2000\BIN\TOP2000.EXE
+            D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\TOP2000\BIN\TOP2000.DAT
       
