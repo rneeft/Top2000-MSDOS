@@ -10,8 +10,16 @@ jobs:
       - name: Install dosbox
         run: |
           choco install dosbox
-
-      - name: Compile TOP2000 DATABASE GEN
+          
+      - name: Setup .NET Core 7.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.0.x
+          
+      - name: Download TOP2000 database
+        run: dotnet run "D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DownloaderApp\DownloaderApp.csproj"
+          
+      - name: Compile TOP2000 INDEX GEN
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
@@ -38,4 +46,13 @@ jobs:
           name: TOP2000 Database Gen
           path: |
             D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\CRTINDEX\BIN\CRTINDEX.EXE
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: TOP2000 Database Gen
+          path: |
+            D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DownloaderApp\editions.csv
+            D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DownloaderApp\tracks.csv
+            D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DownloaderApp\listings.csv
       
