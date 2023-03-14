@@ -17,7 +17,9 @@ jobs:
           dotnet-version: 7.0.x
           
       - name: Download TOP2000 database
-        run: dotnet run "D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DownloaderApp\DownloaderApp.csproj"
+        run: | 
+          cd D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DownloaderApp
+          dotnet run .\DownloaderApp.csproj
           
       - name: Compile TOP2000 INDEX GEN
         run: |
