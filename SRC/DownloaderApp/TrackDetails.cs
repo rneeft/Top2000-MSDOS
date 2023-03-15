@@ -1,13 +1,13 @@
-﻿using System.Collections.Immutable;
+﻿namespace DownloaderApp;
 
-public class TrackDetails
+public sealed class TrackDetails
 {
     public TrackDetails(string title, string artist, int recordedYear, ImmutableSortedSet<ListingInformation> listings)
     {
-        this.Title = title;
-        this.Artist = artist;
-        this.RecordedYear = recordedYear;
-        this.Listings = listings;
+        Title = title;
+        Artist = artist;
+        RecordedYear = recordedYear;
+        Listings = listings;
     }
 
     public string Title { get; }

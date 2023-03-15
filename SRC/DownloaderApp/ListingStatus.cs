@@ -1,4 +1,6 @@
-﻿public enum ListingStatus
+﻿namespace DownloaderApp;
+
+public enum ListingStatus
 {
     Unknown = 0,
     New = 1,

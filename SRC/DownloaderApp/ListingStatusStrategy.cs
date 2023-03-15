@@ -1,7 +1,9 @@
-﻿public class ListingStatusStrategy
+﻿namespace DownloaderApp;
+
+public sealed class ListingStatusStrategy
 {
     private readonly int recordedYear;
-    private readonly List<ListingInformation> previous = new List<ListingInformation>();
+    private readonly List<ListingInformation> previous = new();
 
     public ListingStatusStrategy(int recordedYear)
     {
