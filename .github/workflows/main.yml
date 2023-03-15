@@ -7,11 +7,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      - name: Setup .NET Core 7.0.x
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 7.0.x
-          
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3.0.3
+        
       - name: Download TOP2000 database
         run: | 
           cd D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DownloaderApp
