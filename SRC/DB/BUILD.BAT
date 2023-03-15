@@ -1,0 +1,14 @@
+COPY C:\SRC\CRTINDEX\BIN\CRTINDEX.EXE CRTINDEX.EXE
+
+C:\VBDOS\ISAMIO /I C:\SRC\DownloaderApp\editions.csv TOP2000.DAT editions editions.txt /C > OUTPUT.TXT
+C:\VBDOS\ISAMIO /I C:\SRC\DownloaderApp\listings.csv TOP2000.DAT listings listings.txt /C >> OUTPUT.TXT
+C:\VBDOS\ISAMIO /I C:\SRC\DownloaderApp\tracks.csv TOP2000.DAT tracks tracks.txt /C >> OUTPUT.TXT
+
+CRTINDEX.EXE >> OUTPUT.TXT
+
+MKDIR BIN
+CD BIN
+
+COPY C:\SRC\CRTINDEX\DB\TOP2000.DAT TOP2000.DAT
+
+EXIT

@@ -18,20 +18,26 @@ jobs:
       - name: Install dosbox
         run: choco install dosbox
           
-      - name: Compile TOP2000 CRTINDEX
+      - name: Compile CRTINDEX.EXE
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
           .\DOSBox.exe -c "mount C D:\a\Top2000-MSDOS\Top2000-MSDOS" -c "C:" -c "cd SRC\CRTINDEX" -c "build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\CRTINDEX\OBJ\OUTPUT.TXT
           
-      - name: Compile TOP2000 MS-DOS
+      - name: Compile TOP2000.EXE
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
           .\DOSBox.exe -c "mount C D:\a\Top2000-MSDOS\Top2000-MSDOS" -c "C:" -c "cd SRC\TOP2000" -c "build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\TOP2000\OBJ\OUTPUT.TXT
       
+      - name: Create TOP2000.DAT
+        run: |
+          cd "C:\Program Files (x86)\DOSBox-0.74-3"
+          $Env:SDL_VIDEODRIVER = 'dummy'
+          .\DOSBox.exe -c "mount C D:\a\Top2000-MSDOS\Top2000-MSDOS" -c "C:" -c "cd SRC\DB" -c "build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
+
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -51,7 +57,5 @@ jobs:
         with:
           name: TOP2000 Databases
           path: |
-            D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DownloaderApp\editions.csv
-            D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DownloaderApp\tracks.csv
-            D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DownloaderApp\listings.csv
+            D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DB\BIN\TOP2000.DAT
       
