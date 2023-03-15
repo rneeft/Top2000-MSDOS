@@ -36,7 +36,7 @@ jobs:
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
-          .\DOSBox.exe -c "mount C C:\git\Top2000-MSDOS" -c "C:" -c "cd SRC\DB" -c "build.bat" -c "EXIT" -noconsole -noautoexec
+          .\DOSBox.exe -c "mount C C:\git\Top2000-MSDOS" -c "C:" -c "cd SRC\DB" -c "build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DB\OUTPUT.TXT
 
       - name: Create TOP2000 DOS Site
