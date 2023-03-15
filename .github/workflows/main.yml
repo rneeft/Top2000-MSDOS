@@ -12,7 +12,7 @@ jobs:
         
       - name: Download TOP2000 database
         run: | 
-          cd D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DownloaderApp
+          cd D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DOWNLOAD
           dotnet run .\DownloaderApp.csproj
 
       - name: Install dosbox
