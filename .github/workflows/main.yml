@@ -16,17 +16,16 @@ jobs:
           dotnet run .\DownloaderApp.csproj
 
       - name: Install dosbox
-        run: |
-          choco install dosbox
+        run: choco install dosbox
           
-      - name: Compile TOP2000 INDEX GEN
+      - name: Compile TOP2000 CRTINDEX
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
           .\DOSBox.exe -c "mount C D:\a\Top2000-MSDOS\Top2000-MSDOS" -c "C:" -c "cd SRC\CRTINDEX" -c "build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\CRTINDEX\OBJ\OUTPUT.TXT
           
-      - name: Compile TOP2000 MSDOS
+      - name: Compile TOP2000 MS-DOS
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
