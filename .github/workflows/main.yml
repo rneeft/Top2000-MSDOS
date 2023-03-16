@@ -29,14 +29,14 @@ jobs:
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
-          .\DOSBox.exe -c "mount C D:\a\Top2000-MSDOS\Top2000-MSDOS" -c "C:" -c "cd SRC\TOP2000" -c "build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
+          .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "cd SRC\TOP2000" -c "build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\TOP2000\OBJ\OUTPUT.TXT
       
       - name: Create TOP2000.DAT
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
-          .\DOSBox.exe -c "mount C D:\a\Top2000-MSDOS\Top2000-MSDOS" -c "C:" -c "cd SRC\DB" -c "build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
+          .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "cd SRC\DB" -c "build.bat" -c "EXIT" -noconsole -noautoexec | Out-Null
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\DB\OUTPUT.TXT
 
       - name: Create TOP2000 DOS Site
@@ -44,19 +44,51 @@ jobs:
           cd "SRC\WEB"
           .\build.ps1
 
-      - name: Archive production artifacts
+      - name: Create App artifact
+        run: |
+          cd ${{ github.workspace }}\Publish\App
+          copy "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe" DOSBox.exe
+          copy "C:\Program Files (x86)\DOSBox-0.74-3\SDL_net.dll" SDL_net.dll
+          copy "C:\Program Files (x86)\DOSBox-0.74-3\DSL.dll" DSL.dll
+          copy ${{ github.workspace }}\SRC\TOP2000\BIN\TOP2000.EXE TOP2000.EXE
+          copy ${{ github.workspace }}\SRC\DB\BIN\TOP2000.DAT TOP2000.DAT
+
+      - name: Create 1.44mb disk artifact
+        run: |
+          cd "C:\Program Files (x86)\DOSBox-0.74-3"
+          $Env:SDL_VIDEODRIVER = 'dummy'
+          .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "cd SRC\TOOLS" -c "MKDISK.BAT" -c "EXIT" -noconsole -noautoexec | Out-Null
+
+      - name: Create Raw artifact
+        run: |
+          cd ${{ github.workspace }}\Publish\
+          mkdir RAW
+          copy ${{ github.workspace }}\SRC\TOP2000\BIN\TOP2000.EXE TOP2000.EXE
+          copy ${{ github.workspace }}\SRC\TOP2000\BIN\TOP2000.ICO TOP2000.ICO
+          copy ${{ github.workspace }}\SRC\DB\BIN\TOP2000.DAT TOP2000.DAT
+
+      - name: Publish App disk artifact
         uses: actions/upload-artifact@v3
         with:
-          name: TOP2000 App
-          if-no-files-found: error
-          path: |
-            SRC\TOP2000\BIN\TOP2000.EXE
-            SRC\DB\BIN\TOP2000.DAT
+          name: APP
+          path: Publish\APP
+
+      - name: Publish 1.44mb disk artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: DISK
+          path: Publish\DISK
+
+      - name: Publish Raw disk artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: RAW
+          path: Publish\RAW
 
       - name: Archive TOP2000 DOS Site
         uses: actions/upload-artifact@v3
         with:
-          name: TOP2000 Site
+          name: Site
           path: |
             SRC\WEB\BIN
       
