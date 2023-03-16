@@ -1,0 +1,93 @@
+   --------------------------------------------------------   
+           TOP 2000 VOOR MS-DOS Lees mij voor setup
+                         November 2020
+   --------------------------------------------------------
+                 (c) Copyright Rick Neeft 2020
+
+Dit document helpt u met de installatie van TOP 2000 voor 
+MS-DOS. De installatie kan plaats vinden op echte hardware 
+of via een emulator zoals DOS-BOX welke u hier kunt 
+downloaden: https://www.dosbox.com/download.php?main=1
+
+Versie 1.1 - 2019
+
+--------------------------------
+BESTANDEN OP DE DISKETTE (IMAGE) 
+--------------------------------
+Op de diskette staan een aantal bestanden, hieronder vindt 
+u een overzicht en een beschrijving waar de bestanden voor
+dienen
+
+      TOP2000.IC_     Gecomprimeerd TOP2000 bestands icon
+
+      EXPAND.EXE      Hulpprogramma waarmee gecomprimeerde
+                      installatiebestanden uitgepakt kunnen
+                      worden. Door de bestanden te compri-
+                      meren is het mogelijk alle bestanden
+                      op een diskette te plaatsen
+
+      INSTALL.BAT     Batchbestand waarmee de TOP2000 voor MS-
+                      DOS op uw computer geinstalleerd wordt. 
+                      Het programma wordt automatisch in de map
+                      C:\TOP2000. Indien mogelijk kunt u deze
+                      locatie wijzigen in dit batch bestand.
+
+      TOP2000.EX_     Gecomprimeerd uitvoerbaar bestand. Dit is 
+                      de TOP2000 app voor MS-DOS. 
+
+      TOP2000.DA_     Gecomprimeerd database. In deze (ISAM)
+                      database staan alle gegevens opgeslagen 
+                      die worden getoond in het programma. 
+
+------------------------------------------
+INSTALLATIE VAN DE TOP2000 APP VOOR MS-DOS
+------------------------------------------
+U kunt de software installeren op echte hardware via een
+diskette. U dient de inhoud van het .img setupbestand te
+kopieren naar een diskette. 
+
+1. Plaats de diskette TOP2000 voor DOS in uw computer.
+2. Op het MS-DOS command prompt type u het volgende
+	
+     Install.bat
+
+3. Voer de instructies uit.
+
+--------------------------------------------------------
+INSTALLATIE VAN DE TOP2000 APP VOR MS-DOS ONGEDAAN MAKEN
+--------------------------------------------------------
+U kunt de installatie gemakkelijk ongedaan maken door de
+installatie map (bijvoobeeld C:\Top2000) te verwijderen. 
+
+----------------------------
+OPMERKINGEN VOOR INSTALL.BAT
+----------------------------
+U kunt de inhoud van het install.bat bestand openen in
+Kladblok en hierin aanpassingen doen. U kunt bijvoorbeeld 
+de installatie locatie wijzigen. Als u de locatie wilt
+wijzigen naar het station D in plaats van C, verander dan
+de regels onderaan dit bestand. Bijvoorbeeld: 
+
+mkdir D:\TOP2000
+EXPAND.EXE TOP2000.IC_ D:\TOP2000\TOP2000.ICO
+EXPAND.EXE TOP2000.DA_ D:\TOP2000\TOP2000.DAT
+EXPAND.EXE TOP2000.EX_ D:\TOP2000\TOP2000.EXE
+
+-------
+CONTACT
+-------
+U kunt op de volgende manier contact opnemen met de developer:
+Via email: rick.neeft@outlook.com
+Via GitHub: https://github.com/rneeft/Top2000-MSDOS
+Op GitHub vindt u tevens ook de volledige broncode van de
+applicatie.
+
+--------
+LICENTIE
+--------
+De software maakt gebruik van een MIT-licentie. De volledige
+tekst kunt u hier vinden: 
+https://github.com/rneeft/Top2000-MSDOS/blob/master/LICENSE 
+In het kort houdt deze licentie in dat u alles met de software
+kunt doen maar dat de ontwikkelaar geen garantie(s) geeft voor
+een goede werking hiervan of juistheid van de gegevens. 
