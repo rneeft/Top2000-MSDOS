@@ -53,11 +53,26 @@ jobs:
           copy ${{ github.workspace }}\SRC\TOP2000\BIN\TOP2000.EXE TOP2000.EXE
           copy ${{ github.workspace }}\SRC\DB\BIN\TOP2000.DAT TOP2000.DAT
 
-      - name: Create 1.44mb disk artifact
+      - name: Compress TOP2000.EXE
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
-          .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "cd SRC\TOOLS" -c "MKDISK.BAT" -c "EXIT" -noconsole -noautoexec | Out-Null
+          .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "C:\VBDOS\COMPRESS.EXE -r C:\SRC\TOP2000\BIN\TOP2000.EXE C:\PUBLISH\DISK > OUTPUT.TXT" -c "EXIT" -noconsole -noautoexec | Out-Null
+          type D:\a\Top2000-MSDOS\Top2000-MSDOS\OUTPUT.TXT
+
+      - name: Compress TOP2000.EXE
+        run: |
+          cd "C:\Program Files (x86)\DOSBox-0.74-3"
+          $Env:SDL_VIDEODRIVER = 'dummy'
+          .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "C:\VBDOS\COMPRESS.EXE -r C:\SRC\TOP2000\BIN\TOP2000.ICO C:\PUBLISH\DISK > OUTPUT.TXT" -c "EXIT" -noconsole -noautoexec | Out-Null
+          type D:\a\Top2000-MSDOS\Top2000-MSDOS\OUTPUT.TXT
+
+      - name: Compress TOP2000.EXE
+        run: |
+          cd "C:\Program Files (x86)\DOSBox-0.74-3"
+          $Env:SDL_VIDEODRIVER = 'dummy'
+          .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "C:\VBDOS\COMPRESS.EXE -r C:\SRC\DB\BIN\TOP2000.DAT C:\PUBLISH\DISK > OUTPUT.TXT" -c "EXIT" -noconsole -noautoexec | Out-Null
+          type D:\a\Top2000-MSDOS\Top2000-MSDOS\OUTPUT.TXT
 
       - name: Create Raw artifact
         run: |
