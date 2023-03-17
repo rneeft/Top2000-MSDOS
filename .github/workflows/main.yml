@@ -89,6 +89,7 @@ jobs:
           Compress-Archive -Path ${{github.workspace}}\Publish\APP\* --DestinationPath ${{github.workspace}}\SRC\WEB\BIN\releases\top2000-dosbox.zip
           Compress-Archive -Path ${{github.workspace}}\Publish\DISK\* --DestinationPath ${{github.workspace}}\SRC\WEB\BIN\releases\top2000-disk.zip
           Compress-Archive -Path ${{github.workspace}}\Publish\RAW\* --DestinationPath ${{github.workspace}}\SRC\WEB\BIN\releases\top2000.zip
+          Compress-Archive -Path ${{github.workspace}}\SRC\WEB\BIN\* --DestinationPath ${{github.workspace}}\site.gzip
 
       - name: Publish App disk artifact
         uses: actions/upload-artifact@v3
@@ -97,8 +98,27 @@ jobs:
           path: Publish
 
       - name: Archive TOP2000 DOS Site
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-pages-artifact
         with:
-          name: Site
-          path: |
-            SRC\WEB\BIN
+          name: github-pages
+          path: site.gzip
+  deploy:
+    # Add a dependency to the build job
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
