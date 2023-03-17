@@ -49,7 +49,7 @@ jobs:
           cd ${{ github.workspace }}\Publish\App
           copy "C:\Program Files (x86)\DOSBox-0.74-3\DOSBox.exe" DOSBox.exe
           copy "C:\Program Files (x86)\DOSBox-0.74-3\SDL_net.dll" SDL_net.dll
-          copy "C:\Program Files (x86)\DOSBox-0.74-3\DSL.dll" DSL.dll
+          copy "C:\Program Files (x86)\DOSBox-0.74-3\SDL.dll" SDL.dll
           copy ${{ github.workspace }}\SRC\TOP2000\BIN\TOP2000.EXE TOP2000.EXE
           copy ${{ github.workspace }}\SRC\DB\BIN\TOP2000.DAT TOP2000.DAT
 
