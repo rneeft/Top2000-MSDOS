@@ -79,7 +79,7 @@ jobs:
           cd ${{ github.workspace }}\Publish\
           mkdir RAW
           copy ${{ github.workspace }}\SRC\TOP2000\BIN\TOP2000.EXE TOP2000.EXE
-          copy ${{ github.workspace }}\SRC\TOP2000\BIN\TOP2000.ICO TOP2000.ICO
+          copy ${{ github.workspace }}\SRC\TOP2000\TOP2000.ICO TOP2000.ICO
           copy ${{ github.workspace }}\SRC\DB\BIN\TOP2000.DAT TOP2000.DAT
 
       - name: Publish App disk artifact
