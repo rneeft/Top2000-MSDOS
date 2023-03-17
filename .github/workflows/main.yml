@@ -83,23 +83,18 @@ jobs:
           copy ${{ github.workspace }}\SRC\TOP2000\TOP2000.ICO TOP2000.ICO
           copy ${{ github.workspace }}\SRC\DB\BIN\TOP2000.DAT TOP2000.DAT
 
+      - name: Compress artifacts for site deploy
+        run: |
+          mkdir ${{github.workspace}}\SRC\WEB\BIN\releases
+          Compress-Archive -Path ${{github.workspace}}\Publish\APP\* --DestinationPath ${{github.workspace}}\SRC\WEB\BIN\releases\top2000-dosbox.zip
+          Compress-Archive -Path ${{github.workspace}}\Publish\DISK\* --DestinationPath ${{github.workspace}}\SRC\WEB\BIN\releases\top2000-disk.zip
+          Compress-Archive -Path ${{github.workspace}}\Publish\RAW\* --DestinationPath ${{github.workspace}}\SRC\WEB\BIN\releases\top2000.zip
+
       - name: Publish App disk artifact
         uses: actions/upload-artifact@v3
         with:
-          name: APP
-          path: Publish\APP
-
-      - name: Publish 1.44mb disk artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: DISK
-          path: Publish\DISK
-
-      - name: Publish Raw disk artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: RAW
-          path: Publish\RAW
+          name: Code
+          path: Publish
 
       - name: Archive TOP2000 DOS Site
         uses: actions/upload-artifact@v3
@@ -107,4 +102,3 @@ jobs:
           name: Site
           path: |
             SRC\WEB\BIN
-      
