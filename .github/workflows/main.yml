@@ -1,5 +1,15 @@
 name: Build TOP2000 for MS-DOS
 on: push
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: windows-latest
@@ -41,8 +51,10 @@ jobs:
 
       - name: Create TOP2000 DOS Site
         run: |
+          mkdir ${{ github.workspace }}\_site
           cd "SRC\WEB"
           .\build.ps1
+          copy ${{github.workspace}}\SRC\WEB\BIN\*.* ${{ github.workspace }}\_site\
 
       - name: Create App artifact
         run: |
@@ -53,25 +65,15 @@ jobs:
           copy ${{ github.workspace }}\SRC\TOP2000\BIN\TOP2000.EXE TOP2000.EXE
           copy ${{ github.workspace }}\SRC\DB\BIN\TOP2000.DAT TOP2000.DAT
 
-      - name: Compress TOP2000.EXE
+      - name: Compress
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
           .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "C:\VBDOS\COMPRESS.EXE -r C:\SRC\TOP2000\BIN\TOP2000.EXE C:\PUBLISH\DISK > OUTPUT.TXT" -c "EXIT" -noconsole -noautoexec | Out-Null
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\OUTPUT.TXT
-
-      - name: Compress TOP2000.ICO
-        run: |
-          cd "C:\Program Files (x86)\DOSBox-0.74-3"
-          $Env:SDL_VIDEODRIVER = 'dummy'
-          .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "C:\VBDOS\COMPRESS.EXE -r C:\SRC\TOP2000\TOP2000.ICO C:\PUBLISH\DISK > OUTPUT.TXT" -c "EXIT" -noconsole -noautoexec | Out-Null
+           .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "C:\VBDOS\COMPRESS.EXE -r C:\SRC\TOP2000\TOP2000.ICO C:\PUBLISH\DISK > OUTPUT.TXT" -c "EXIT" -noconsole -noautoexec | Out-Null
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\OUTPUT.TXT
-
-      - name: Compress TOP2000.DAT
-        run: |
-          cd "C:\Program Files (x86)\DOSBox-0.74-3"
-          $Env:SDL_VIDEODRIVER = 'dummy'
-          .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "C:\VBDOS\COMPRESS.EXE -r C:\SRC\DB\BIN\TOP2000.DAT C:\PUBLISH\DISK > OUTPUT.TXT" -c "EXIT" -noconsole -noautoexec | Out-Null
+            .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "C:\VBDOS\COMPRESS.EXE -r C:\SRC\DB\BIN\TOP2000.DAT C:\PUBLISH\DISK > OUTPUT.TXT" -c "EXIT" -noconsole -noautoexec | Out-Null
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\OUTPUT.TXT
 
       - name: Create Raw artifact
@@ -98,27 +100,15 @@ jobs:
           path: Publish
 
       - name: Archive TOP2000 DOS Site
-        uses: actions/upload-pages-artifact
-        with:
-          name: github-pages
-          path: site.gzip
+        uses: actions/upload-pages-artifact@v1
+
   deploy:
-    # Add a dependency to the build job
-    needs: build
-
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
-
-    # Deploy to the github-pages environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    # Specify runner + deployment step
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+      runs-on: ubuntu-latest
+      needs: build
+      steps:
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v1
