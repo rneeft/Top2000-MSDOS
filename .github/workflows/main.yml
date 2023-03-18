@@ -96,7 +96,7 @@ jobs:
       - name: copy site
         run: |
           mkdir ${{github.workspace}}\_site
-          copy ${{github.workspace}}\SRC\WEB\BIN\*.* ${{ github.workspace }}\_site\
+          xcopy ${{github.workspace}}\SRC\WEB\BIN\*.* ${{ github.workspace }}\_site\ /S
 
       - name: Publish App disk artifact
         uses: actions/upload-artifact@v3
