@@ -18,6 +18,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup .NET Core SDK
+        if: ${{ false }}
         uses: actions/setup-dotnet@v3.0.3
         
       - name: Download TOP2000 database
@@ -43,6 +44,7 @@ jobs:
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\SRC\TOP2000\OBJ\OUTPUT.TXT
       
       - name: Create TOP2000.DAT
+        if: ${{ false }}
         run: |
           cd "C:\Program Files (x86)\DOSBox-0.74-3"
           $Env:SDL_VIDEODRIVER = 'dummy'
@@ -63,7 +65,7 @@ jobs:
           copy "C:\Program Files (x86)\DOSBox-0.74-3\SDL_net.dll" SDL_net.dll
           copy "C:\Program Files (x86)\DOSBox-0.74-3\SDL.dll" SDL.dll
           copy ${{ github.workspace }}\SRC\TOP2000\BIN\TOP2000.EXE TOP2000.EXE
-          copy ${{ github.workspace }}\SRC\DB\BIN\TOP2000.DAT TOP2000.DAT
+        # copy ${{ github.workspace }}\SRC\DB\BIN\TOP2000.DAT TOP2000.DAT
 
       - name: Compress
         run: |
@@ -73,8 +75,8 @@ jobs:
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\OUTPUT.TXT
            .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "C:\VBDOS\COMPRESS.EXE -r C:\SRC\TOP2000\TOP2000.ICO C:\PUBLISH\DISK > OUTPUT.TXT" -c "EXIT" -noconsole -noautoexec | Out-Null
           type D:\a\Top2000-MSDOS\Top2000-MSDOS\OUTPUT.TXT
-            .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "C:\VBDOS\COMPRESS.EXE -r C:\SRC\DB\BIN\TOP2000.DAT C:\PUBLISH\DISK > OUTPUT.TXT" -c "EXIT" -noconsole -noautoexec | Out-Null
-          type D:\a\Top2000-MSDOS\Top2000-MSDOS\OUTPUT.TXT
+         #   .\DOSBox.exe -c "mount C ${{ github.workspace }}" -c "C:" -c "C:\VBDOS\COMPRESS.EXE -r C:\SRC\DB\BIN\TOP2000.DAT C:\PUBLISH\DISK > OUTPUT.TXT" -c "EXIT" -noconsole -noautoexec | Out-Null
+         # type D:\a\Top2000-MSDOS\Top2000-MSDOS\OUTPUT.TXT
 
       - name: Create Raw artifact
         run: |
@@ -83,7 +85,7 @@ jobs:
           cd RAW
           copy ${{ github.workspace }}\SRC\TOP2000\BIN\TOP2000.EXE TOP2000.EXE
           copy ${{ github.workspace }}\SRC\TOP2000\TOP2000.ICO TOP2000.ICO
-          copy ${{ github.workspace }}\SRC\DB\BIN\TOP2000.DAT TOP2000.DAT
+      #    copy ${{ github.workspace }}\SRC\DB\BIN\TOP2000.DAT TOP2000.DAT
 
       - name: Compress artifacts for site deploy
         run: |
